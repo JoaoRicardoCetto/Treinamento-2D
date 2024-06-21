@@ -18,7 +18,7 @@ Desenvolva pelo menos 2 <b>novos componentes</b> ( da sua criatividade) que pode
 </ul>
 
 <h3>Exemplo Educativo</h3>
-<p>Supondo que queremos implementar um arquivo Inseto, seria interessante criar-mos um pacote de inseticída? Logo haveria a possíbilidade de interagir entre eles.</p>
+<p>Supondo que queremos implementar um arquivo Inseto, seria interessante criarmos um pacote de inseticída? Logo haveria a possíbilidade de interagir entre eles.</p>
 
 <h3>Observações</h3>
 <p>É de livre desejo de vocês fazerem quantas pastas para acharem necessário</p>
