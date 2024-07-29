@@ -1,59 +1,148 @@
+#include "elementos/elementosPassaros/minhoca.h"
+#include "elementos/elementosPassaros/gafanhoto.h"
+#include "elementos/elementosFormigas/boloDeChocolate.h"
+#include "elementos/elementosFormigas/granuladoFormicida.h"
 
-#include<vector>
-#include "fertilizantes/fertilizante_organico.h"
-#include "fertilizantes/fertilizante_industrial.h"
+//COLOQUE COMO 0 PARA NAO MOSTRAR OS DADOS DOS PASSAROS E 1 PARA MOSTRAR-LOS 
+#define EXIBIR_DADOS_PASSAROS 1
+#define EXIBIR_VANTAGENS_COMIDAS_PASSAROS 1
+#define ALIMENTAR_PASSAROS 1
+#define RECUPERAR_NINHO 1
 
-//Adicione 0 ou 1 se deseja que certas funcionalidades sejam realizadas
-
-#define EXIBIR_DADOS 1
-#define FERTILIZAR_PLANTAS 1
-#define COMPARAR_ARVORES 1
+//COLOQUE COMO 0 PARA NAO MOSTRAR OS DADOS DA COLONIA DE FORMIGAS E 1 PARA MOSTRAR-LOS
+#define EXIBIR_DADOS_COLONIA 1
+#define EXIBIR_VANTAGENS_COMIDAS_FORMIGA 1
+#define COMER_BOLO 1
+#define COMER_FORMICIDA 1
+ 
 
 int main(){
 
-    planta* laranjeira = new planta;
-    planta* abacateira = new planta;
-
-    laranjeira->nome = "Laranjeira";
-    laranjeira->alturaAtual = 12.5;
-    laranjeira->alturaMax = 22.21;
-    laranjeira->fertilizanteFavorito = "Casca de melancia";
-
-    abacateira->nome = "Abacateira";
-    abacateira->alturaAtual = 8.15;
-    abacateira->alturaMax = 35.08;
-    abacateira->fertilizanteFavorito = "Esterco de Dromedario";
-
+//CODIGO DOS PASSAROS NO JARDIM, O CODIGO DAS FORMIGAS ESTA NO FINAL DO DOS PASSAROS
+    passaro *canario = (passaro*)std::malloc(sizeof(passaro));
+    passaro *cuco = (passaro*)std::malloc(sizeof(passaro));
     
-    //Insira os printas das novas plantas nesse intervalo.
-#ifdef EXIBIR_DADOS
+    canario->raca = "Canario";
+    canario->peso = 80;
+    canario->forcaBicada = 0;
+    canario->vida = 3;
 
-    infosPlanta::exibirInfos(*laranjeira);
-    infosPlanta::exibirInfos(*abacateira);
+    cuco->raca = "Cuco";
+    cuco->peso = 50;
+    cuco->forcaBicada = 1;
+    cuco->vida = 2;
 
-#endif
+#if EXIBIR_DADOS_PASSAROS
 
-    //Insira as plantas a serem fertilizadas e ser respectivos fertilizantes.
-#ifdef FERTILIZAR_PLANTAS
-
-    fertilizante_industrial::fertilizar(*abacateira);
-    fertilizante_organico::fertilizar(*laranjeira);
-
-#endif
-
-#ifdef EXIBIR_DADOS
-
-    std::cout << "\n\nNovos dados...\n";
-    infosPlanta::exibirInfos(*laranjeira);
-    infosPlanta::exibirInfos(*abacateira);
+    std::cout << "\n\nEXIBINDO DADOS DOS PASSAROS: \n";
+    infosPassaro::exibirInfos(*canario);
+    infosPassaro::exibirInfos(*cuco);
+    infosPassaro::compararPassaros(*canario, *cuco);
 
 #endif
 
-#ifdef COMPARAR_ARVORES
+#if EXIBIR_VANTAGENS_COMIDAS_PASSAROS
 
-    if((*laranjeira) == (*abacateira)){
-        std::cout << "\n\nAs arvores são iguais!!";
+    std::cout << "\n\n--------------------------------------- VANTAGENS DAS COMIDAS 'GAFANHOTO e MINHOCA' ---------------------------------------\n";
+    gafanhoto::exibirVantagens();
+    minhoca::exibirVantagens();
+    std::cout << "\n\n---------------------------------------------------------------------------------------------------------------------------\n\n\n\n";
+
+#endif
+
+#if ALIMENTAR_PASSAROS
+
+    gafanhoto::alimentar(*canario);
+    minhoca::alimentar(*cuco);
+
+#endif
+
+#if EXIBIR_DADOS_PASSAROS
+
+    std::cout << "\nINFORMACOES ATUALIZADAS DOS PASSAROS APOS ENXEREM O BUCHO:\n";
+    infosPassaro::exibirInfos(*canario);
+    infosPassaro::exibirInfos(*cuco);
+    infosPassaro::compararPassaros(*canario, *cuco);
+
+#endif
+
+#if RECUPERAR_NINHO
+
+    std::cout << "\nO CANARIO TENTA RECUPERAR SEU NINHO... \n";
+    if((*canario) >= (*cuco)){
+        std::cout << "\nO canario conseguiu espantar o cuco de seu ninho\n\n";
     }
+    else{
+        std::cout << "\nFaltou " << (cuco->vida -canario->forcaBicada) << " de dano para o cuco ser espantado!\n";
+    }
+
+#endif
+
+
+//------------------------------------------ CODIGO DAS FORMIGAS DO JARDIM ------------------------------------------------
+
+    coloniaFormigas *colonia = (coloniaFormigas*)std::malloc(sizeof(coloniaFormigas));
+    bolo *boloDeChocolate = (bolo*)std::malloc(sizeof(bolo));
+    formicida *granuladoFormicida = (formicida*)std::malloc(sizeof(formicida));
+
+    colonia->nomeCientifico = "Acromyrmex octospinosus";
+    colonia->tamanhoColonia = 50;
+    colonia->forcaIndividual = 1;
+    colonia->forcaColonia = (colonia->tamanhoColonia)*(colonia->forcaIndividual);
+    
+    boloDeChocolate->peso = 200;
+    granuladoFormicida->peso = 100;
+    
+    std::cout << "\n\n\n\n\n\n\n===================================================================================================================\n\n\n\n\n";
+    std::cout << "\n\n\n\nEXIBINDO DADOS DA COLONIA DE FORMIGAS DO JARDIM: \n";
+
+#if EXIBIR_DADOS_COLONIA
+
+    infosColonia::exibirInfos(*colonia);
+
+#endif
+
+#if EXIBIR_VANTAGENS_COMIDAS_FORMIGA
+
+    std::cout << "\n---------------------------------- INFORMACOES SOBRE AS COMIDAS DAS FORMIGAS: -----------------------------------\n";
+    boloDeChocolate::exibirVantagens();
+    granuladoFormicida::exibirVantagens();
+    std::cout << "\n\n-----------------------------------------------------------------------------------------------------------------\n";
+
+#endif
+
+#if COMER_BOLO 
+    std::cout << "\n\n\n\nAS FORMIGAS ACHARAM UM BOLO... \n";
+    if(boloDeChocolate->peso > (*colonia)){
+        infosColonia::viagensParaCarregarComida(*colonia, boloDeChocolate->peso);
+        boloDeChocolate::comerBolo(*colonia);
+    }
+    else{
+        std::cout << "\nAs formigas conseguiram levar o bolo para casa e comer de um vez!\n";
+        boloDeChocolate::comerBolo(*colonia);
+    }
+
+#endif
+
+#if COMER_FORMICIDA
+
+    std::cout << "\n\n\n\nAS FORMIGAS ACHARAM UM 'GRANULADO' (FORMICIDA) DELICIOSO... \n";
+    if(granuladoFormicida->peso > (*colonia)){
+        infosColonia::viagensParaCarregarComida(*colonia, granuladoFormicida->peso);
+        granuladoFormicida::comerGranuladoFormicida(*colonia);
+    }
+    else{
+        std::cout << "\nAs formigas levaram o formicida para o formigueiro de uma vez e o comeram!\n";
+        granuladoFormicida::comerGranuladoFormicida(*colonia);
+    }
+
+
+#endif
+
+#if EXIBIR_DADOS_COLONIA
+
+    std::cout << "\n\n\n\nDADOS ATUALIZADOS SOBRE A COLONIA DE FORMIGAS DO JARDIM: \n";
+    infosColonia::exibirInfos(*colonia);
 
 #endif
 
