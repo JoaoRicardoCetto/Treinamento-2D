@@ -1,2 +1,2 @@
-compile-execute:
-	@cd build && cmake .. && make && clear && ./jardim
+compilar-executar:
+	@cd build && cmake .. && make && ./jardim
